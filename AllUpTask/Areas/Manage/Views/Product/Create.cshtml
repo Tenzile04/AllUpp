@@ -1,0 +1,91 @@
+﻿@model Product
+<div class="container-fluid">
+    <h1 class="mx-3">Create</h1>
+    <div class="row justify-content-center flex-column align-items-center">
+        <form class="col-md-8" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Code">Code</label>
+                    <input asp-for="Code" class="form-control" placeholder="Code">
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Desc">Desc</label>
+                <textarea asp-for="Desc" class="form-control" rows="6" placeholder="Desc"></textarea>
+                <span asp-validation-for="Desc" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="SalePrice">SalePrice</label>
+                    <input asp-for="SalePrice" class="form-control" placeholder="SalePrice">
+                    <span asp-validation-for="SalePrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="CostPrice">CostPrice</label>
+                    <input asp-for="CostPrice" class="form-control" placeholder="CostPrice">
+                    <span asp-validation-for="CostPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="DiscountPercent">DiscountPercent</label>
+                    <input asp-for="DiscountPercent" class="form-control" placeholder="DiscountPercent">
+                    <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Tax">Tax</label>
+                    <input asp-for="Tax" class="form-control" placeholder="Tax">
+                    <span asp-validation-for="Tax" class="text-danger"></span>
+                </div>
+               
+               
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="BrandId">Brend</label>
+                    <select asp-for="BrandId" class="form-select" aria-label="Default select example">
+                        @foreach (var brands in ViewBag.Brands)
+                        {
+                            <option value="@brands.Id">@brands.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="TagIds">Tag</label>
+                    <select asp-for="TagIds" class="form-select" aria-label="Default select example" asp-items="@(new SelectList(ViewBag.Tags, "Id","Name"))">
+                    </select>
+                    <span asp-validation-for="TagIds" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="mb-3 col-md-6">
+                    <label asp-for="ProductPosterImageFile" class="form-label">ProductPosterImageFile</label>
+                    <input asp-for="ProductPosterImageFile" placeholder="ProductPosteImageFile" class="form-control">
+                    <span asp-validation-for="ProductPosterImageFile"></span>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label asp-for="ProductHoverImageFile" class="form-label">ProductHoverImageFile</label>
+                    <input asp-for="ProductHoverImageFile" placeholder="ProductHoverImageFile" class="form-control">
+                    <span asp-validation-for="ProductHoverImageFile"></span>
+                </div>
+                <div class="mb-3 col-md-12">
+                    <label asp-for="ImageFiles" class="form-label">ImageFiles</label>
+                    <input asp-for="ImageFiles" placeholder="ImageFiles" class="form-control">
+                    <span asp-validation-for="ImageFiles"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="IsAvailable">
+                    <label class="form-check-label" asp-for="IsAvailable">IsAvailable</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>

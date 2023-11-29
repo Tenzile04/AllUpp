@@ -1,0 +1,114 @@
+﻿@model Product
+<div class="container-fluid">
+    <h1 class="mx-3">Update</h1>
+    <div class="row justify-content-center flex-column align-items-center">
+        <form class="col-md-8" asp-action="Update" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Code">Code</label>
+                    <input asp-for="Code" class="form-control" placeholder="Code">
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Desc">Desc</label>
+                <textarea asp-for="Desc" class="form-control" rows="6" placeholder="Desc"></textarea>
+                <span asp-validation-for="Desc" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="SalePrice">SalePrice</label>
+                    <input asp-for="SalePrice" class="form-control" placeholder="SalePrice">
+                    <span asp-validation-for="SalePrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="CostPrice">CostPrice</label>
+                    <input asp-for="CostPrice" class="form-control" placeholder="CostPrice">
+                    <span asp-validation-for="CostPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="DiscountPercent">DiscountPercent</label>
+                    <input asp-for="DiscountPercent" class="form-control" placeholder="DiscountPercent">
+                    <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Tax">Tax</label>
+                    <input asp-for="Tax" class="form-control" placeholder="Tax">
+                    <span asp-validation-for="Tax" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="BrandId">Brand</label>
+                    <select asp-for="BrandId" class="form-select" aria-label="Default select example">
+                        @foreach (var brand in ViewBag.Brands)
+                        {
+                            <option value="@brand.Id">@brand.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group col-md-4">
+                    <label asp-for="TagIds">Tag</label>
+                    <select asp-for="TagIds" class="form-select" aria-label="Default select example" asp-items="@(new SelectList(ViewBag.Tags, "Id","Name"))">
+                    </select>
+                    <span asp-validation-for="TagIds" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="mb-3 col-md-6">
+                    <label asp-for="ProductPosterImageFile" class="form-label">ProductPosterImageFile</label>
+                    <input asp-for="ProductPosterImageFile" placeholder="ProductPosterImageFile" class="form-control">
+                    <div style="width:150px;margin-top:20px">
+                        <img style="max-width:100%" src="~/uploads/products/@Model.ProductImages?.Where(x=>x.IsPoster==true).FirstOrDefault()?.ImageUrl" />
+                    </div>
+                    <span asp-validation-for="ProductPosterImageFile"></span>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label asp-for="ProductHoverImageFile" class="form-label">ProductHoverImageFile</label>
+                    <input asp-for="ProductHoverImageFile" placeholder="ProductHoverImageFile" class="form-control">
+                    <div style="width:150px;margin-top:20px">
+                        <img style="max-width:100%" src="~/uploads/products/@Model.ProductImages?.Where(x=>x.IsPoster==false).FirstOrDefault()?.ImageUrl" />
+                    </div>
+                    <span asp-validation-for="ProductHoverImageFile"></span>
+                </div>
+                <div class="mb-3 col-md-12">
+                    <label asp-for="ImageFiles" class="form-label">ImageImageFilesFile</label>
+                    <input asp-for="ImageFiles" placeholder="ImageFiles" class="form-control">
+                    <div style="display:flex">
+                        @foreach (var sliderImage in Model.ProductImages.Where(x => x.IsPoster == null))
+                        {
+                            <div style="width:150px;margin:0 20px;margin-top:20px;position:relative;">
+                                <span class="delete-image-btn position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-1 text-white" style="right:2;font-size:15px !important;cursor:pointer">X</span>
+                                <img style="max-width:100%" src="~/uploads/products/@sliderImage.ImageUrl" />
+                                <input name="ImageIds" type="hidden" value="@sliderImage.Id" />
+                            </div>
+                        }
+                    </div>
+                    <span asp-validation-for="ImageFiles"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="IsAvailable">
+                    <label class="form-check-label" asp-for="IsAvailable">IsAvailable</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var btns = document.querySelectorAll(".delete-image-btn");
+    btns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            btn.parentElement.remove()
+        })
+    })
+</script>
